@@ -1,0 +1,134 @@
+body{
+  background-color:rgb(238, 235, 232);
+
+}
+
+.about-page {
+  background-color: #bcae9a;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.about-container h1 {
+  width: 100%;
+  margin-bottom: 0rem;
+}
+
+h1 {
+  color: #6f5425;
+}
+
+section {
+  max-width: 400px;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(127, 108, 76, 255);
+  flex: 1;
+  min-width: 300px;
+}
+
+section h2{
+  color: #6f5425;
+
+}
+
+@media (min-width: 1024px) {
+  .about-container {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 1023px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page {
+    max-width: 90%;
+  }
+
+  section {
+    max-width: 100%;
+  }
+}
+
+p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.back-button {
+  background: linear-gradient(135deg, #9c843c, #6f5425);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #a29070, #7f6c4c);
+  transform: translateY(-2px);
+}
+
+.back-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
+.back-button:active {
+  transform: scale(0.95);
+}
+
+.title-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.title-logo-container h1 {
+  margin-bottom: 0.5rem;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}

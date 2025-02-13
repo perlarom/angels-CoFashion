@@ -1,0 +1,124 @@
+/* Estilos generales */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .logo img {
+    height: 50px;
+  }
+  
+  /* Menú principal: diseño en pantallas grandes */
+  .nav {
+    display: flex;
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+    flex-grow: 1; /* Asegura que el menú ocupe todo el ancho disponible */
+  }
+  
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+  }
+  
+  .nav-menu li {
+    display: inline;
+  }
+  
+  .nav-menu a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333; /* Color del texto */
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .nav-menu a:hover {
+    color: #ff6600; /* Color al pasar el cursor */
+  }
+  
+  /* Estilo del ícono del carrito */
+  .cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #333; /* Color del icono del carrito */
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .cart-icon:hover {
+    color: #ff6600;
+  }
+  
+  /* Menú en pantallas pequeñas: estilo de menú deslizable */
+  .menu-icon {
+    display: none;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .nav.open {
+    display: block;
+  }
+  
+  .nav-menu {
+    display: none;
+  }
+  
+  .nav.open .nav-menu {
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .nav-menu li {
+    margin-bottom: 10px;
+  }
+  
+  .nav-menu a {
+    color: #333;
+  }
+  
+  .nav-menu a:hover {
+    color: #ff6600;
+  }
+  
+  /* Estilo responsive para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      padding: 10px 15px;
+    }
+  
+    .nav {
+      width: 100%;
+      flex-direction: column; /* Asegura que el menú se apile en pantallas pequeñas */
+      align-items: center;
+    }
+  
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+      margin-top: 10px;
+    }
+  
+    .menu-icon {
+      display: block;
+    }
+  }
+  
