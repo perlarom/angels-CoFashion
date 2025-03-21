@@ -1,0 +1,72 @@
+.tienda-container {
+  font-family: Arial, sans-serif;
+  margin-top: 92px;
+  border: none;
+  border-radius: 0;
+}
+
+.tienda-content {
+  padding: 20px;
+  border: none;
+  border-radius: 0;
+}
+
+.tienda-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.filters button {
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.filters button:hover {
+  background-color: #ddd;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.product-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #555;
+}
+
+.product-button {
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.product-button:hover {
+  background-color: #2980b9;
+}

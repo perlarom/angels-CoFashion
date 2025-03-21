@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken', 
+    'rest_framework_simplejwt',
     'corsheaders',
-    'apps.api'
+    'apps.api',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +139,25 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # Permitir acceso a todos
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny', 
+    ),
 }
+
+# settings.py
+
+import os
+
+# Definir el directorio donde se guardarán los archivos de medios
+MEDIA_URL = '/media/'  # Esto es la URL accesible para los archivos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Ruta en el servidor donde se almacenarán las imágenes
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "al222210580@gmail.com"  # Reemplaza con tu correo
+EMAIL_HOST_PASSWORD = "tvut bkyx vptk ssrg"  # Usa una contraseña segura o App Password

@@ -1,0 +1,35 @@
+.main-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;  /* Ajusta el tamaño del Sidebar */
+  position: fixed;  /* Fija el Sidebar */
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.content {
+  margin-left: 250px;  /* Ajusta el margen izquierdo para dejar espacio al Sidebar */
+  padding: 20px;
+  flex-grow: 1;  /* Asegura que el contenido ocupe el resto del espacio */
+  background-color: #fff;
+  overflow-x: auto;
+}
+
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .user-table th, .user-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .user-table th {
+    background-color: #f4f4f4;
+  }
+  

@@ -49,17 +49,18 @@
 .overlay button {
   background-color: white;
   color: black;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 600;
+  max-width: 200px; /* Tamaño fijo de ancho */
+  min-height: 40px; /* Puedes ajustar la altura si es necesario */
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
   transition: background-color 0.3s ease;
+  text-align: center;
 }
 
 .overlay button:hover {
   background-color: #d1d1d1;
 }
-
 
 .button-container {
   margin-top: 20px;
@@ -109,4 +110,19 @@
 
 .navbar-links a:hover {
   color: #ddd; /* Color del texto al pasar el cursor */
+}
+
+@font-face {
+  font-family: "Madina";
+  src: url("../assets/fonts/Madina.otf") format("otf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.overlay h3 {
+  font-family: "Madina"; /* Cambia la fuente */
+  font-size: 1.5rem; /* Ajusta el tamaño */
+  font-weight: 400; /* Ajusta el grosor */
+  color: #f8f8f8; /* Cambia el color */
+  letter-spacing: 1px; /* Espaciado entre letras */
 }

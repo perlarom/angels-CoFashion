@@ -1,0 +1,148 @@
+.productos-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    margin-top: 90px;
+}
+  
+.productos-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    justify-items: stretch;
+    flex-grow: 1; /* Hace que la lista de productos ocupe el espacio disponible */
+}
+  
+.product-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin: 10px;
+    height: 100%; /* Asegura que el contenedor de cada producto ocupe todo el espacio disponible */
+    overflow: hidden;
+    width: 100%;  /* Asegura que ocupe todo el espacio disponible */
+}
+
+  
+.product-item:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+  
+.product-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+/* La imagen ocupará todo el ancho del contenedor */
+.product-item img {
+    width: 100%;  
+    height: 200px; /* Mantiene una altura uniforme */
+    object-fit: cover; 
+    display: block;
+    border: none;
+    border-radius: 0;  
+}
+  
+.product-title {
+    font-size: 18px;
+    color: #6F5425;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+  
+.product-description {
+    font-size: 14px;
+    color: #7A7A7A;
+    margin-bottom: 10px;
+}
+  
+.product-price {
+    font-size: 16px;
+    color: #9C843C;
+    margin-bottom: 15px;
+}
+  
+.product-button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    background-color: #9C843C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+  
+.product-button:hover {
+    background-color: #7F6C4C;
+}
+  
+.productos-section {
+    padding: 40px 20px;
+    text-align: center;
+    background: #F2EFEA;
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    align-items: center;
+}
+  
+.productos-section .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: center;
+}
+  
+.no-products {
+    font-size: 18px;
+    color: #777;
+    text-align: center;
+    margin-top: 30px;
+}
+  
+/* Estilos para el footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+.like-button {
+    position: absolute;
+    top: -5px;
+    right: -110px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 24px;
+    z-index: 10;  /* Aumenta el z-index para asegurar que esté sobre otros elementos */
+}
+
+
+.like-button .fa-heart {
+    color: #007bff; /* Color azul sólido */
+}
+
+.like-button .fa-heart-o {
+    color: #00aaff; /* Color azul claro */
+}
+
+.like-button:hover {
+    background: transparent;  /* Eliminar cualquier cambio al hacer hover */
+}

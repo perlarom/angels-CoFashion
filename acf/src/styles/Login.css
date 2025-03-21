@@ -1,0 +1,118 @@
+.login-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px; 
+    position: relative;
+    margin-top: 40px;
+}
+  
+  .login-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    position: relative;
+    padding-top: 60pz;
+  }
+  
+  .login-form .form-group {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .login-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+    font-size: 14px; 
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .login-form button:hover {
+    background-color: #e55a00;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px; /* Añade espacio debajo del título */
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Estilo para el logo */
+/* Estilo para el logo */
+.logo-container {
+    position: absolute;
+    top: -50px; /* Saca el logo fuera del contenedor */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px; /* Ajusta el tamaño del logo */
+    height: auto; /* Mantén la proporción */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Asegura que el logo esté por encima de otros elementos */
+  }
+  
+  .logo-container img {
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .password-group {
+    position: relative;
+  }
+  
+  .password-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .password-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el icono */
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .toggle-password:hover {
+    color: #000;
+  }
+  

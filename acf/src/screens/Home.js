@@ -63,7 +63,7 @@ const Home = () => {
         <h1>Bienvenido a Angels & Co. Fashion</h1>
         <h3>Donde el estilo se encuentra con cada ángel</h3>
         <button 
-          onClick={() => navigate("/principal")}>
+          onClick={() => navigate("/inicio")}>
             Comienza tu viaje
         </button>
       </div>

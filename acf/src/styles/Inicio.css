@@ -1,0 +1,237 @@
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+    
+  .welcome-section {
+    position: relative;
+    background-image: url('../assets/imgs/img1.jpg'); /* Ruta de tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    padding: 200px 20px;
+    text-align: center;
+    margin-left: 0; /* Elimina margen izquierdo */
+    margin-right: 0; /* Elimina margen derecho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%; 
+    border-radius: 0;
+    margin-top: 35px;  
+    max-width: 100%; 
+}
+  
+  .welcome-content {
+    text-align: center;
+    width: 100%; /* Asegura que el contenido también ocupe el 100% */
+    max-width: 100vw; 
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2; 
+  }
+  
+  .welcome-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro con opacidad */
+    z-index: 1; /* Asegura que el fondo negro esté sobre la imagen */
+  }
+
+  .welcome-title {
+    font-size: 36px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-button {
+    width: 300px; /* Ancho fijo */
+    height: 50px; /* Alto fijo */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #9C843C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+  
+  .welcome-button:hover {
+    background-color: #7F6C4C;
+}
+  
+  /* Categorías */
+  .categories-section {
+    padding: 50px 20px;
+    text-align: center;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    margin-top: 40px; /* Espacio superior */
+  }
+  
+  .categories-title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .category-item {
+    text-align: center;
+  }
+  
+  .category-item img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .category-item:hover img {
+    transform: scale(1.1);
+  }
+  
+  .category-name {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #7F6C4C;
+}
+  
+  /* Productos */
+  .products-section {
+    padding: 50px 20px;
+    text-align: center;
+    background: #F2EFEA;
+    width: 100%;
+    max-width: 1200px; 
+    margin: 40px auto;
+    align-items: center;
+  }
+
+  .products-section .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en todo momento */
+    gap: 20px;
+    align-items: center;
+  }
+  
+  /* Media queries para asegurar que se adapten bien a pantallas más pequeñas */
+  @media (max-width: 1024px) {
+    .products-section .grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .products-section .grid {
+      grid-template-columns: 1fr; /* 1 columna en pantallas pequeñas */
+    }
+  }
+  
+  
+  .products-title {
+    font-size: 32px;
+    color: #6F5425;
+  }
+  
+  .product-item {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin: 0 auto; /* Centra los elementos */
+    width: 100%;
+    max-width: 250px; /* Controla el tamaño máximo */
+  }
+  
+  .product-item:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-item img {
+    width: 50%;
+    max-width: 150px;
+    height: 50%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .product-title {
+    font-size: 20px;
+    color: #6F5425;
+}
+  
+  .product-price {
+    font-size: 18px;
+    color: #9C843C;
+}
+  
+  .product-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #9C843C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+  }
+  
+  .product-button:hover {
+    background-color: #7F6C4C;
+}  
+  
+  /* Beneficios */
+  .benefits-section {
+    padding: 50px 20px;
+    text-align: center;
+    background: #fff;
+    width: 100%;
+    margin: 40px auto;    
+    max-width: 1200px; 
+  }
+
+  .benefits-section .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(150px, 1fr)); /* Ajusta tamaño de columnas */
+    gap: 5px; /* Reduce espacio entre elementos */
+    justify-content: center;
+    align-items: center; /* Centrar los elementos en el contenedor */
+  }
+  
+  .benefits-title {
+    font-size: 28px;
+    color: #6F5425;
+    margin-bottom: 30px;
+  }
+  
+.benefit-item {
+  font-size: 18px;
+  color: #7F6C4C;
+  background: #F2EFEA;
+  padding: 15px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  width: auto; /* Permite ajuste dinámico */
+  max-width: 90%; /* Ajusta el ancho según sea necesario */
+}
+  
+  .benefit-item:hover {
+    background-color: #9C843C;
+    color: white;
+  }
+  

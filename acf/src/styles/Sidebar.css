@@ -1,0 +1,61 @@
+/* Estilos globales para la barra lateral */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px; /* Ancho de la barra lateral */
+  height: 100%;
+  background-color: #333; /* Color de fondo oscuro */
+  padding-top: 20px;
+  z-index: 1000; /* Asegura que la barra lateral siempre esté encima del contenido */
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de profundidad */
+  transition: 0.3s ease; /* Transición suave */
+  overflow-y: auto; /* Activa el scroll vertical */
+}
+
+/* Opciones del menú dentro de la barra lateral */
+.sidebar a {
+  display: block;
+  padding: 16px;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  border-bottom: 1px solid #444; /* Línea divisoria */
+  transition: 0.3s; /* Transición suave al pasar el ratón */
+}
+
+/* Cambiar color de fondo al pasar el ratón sobre los enlaces */
+.sidebar a:hover {
+  background-color: #575757;
+}
+
+/* Estilo de las opciones de la barra lateral cuando están activas */
+.sidebar a.active {
+  background-color: #1a1a1a;
+  font-weight: bold;
+}
+
+/* Contenedor de la página principal, que se desplaza cuando se muestra la barra lateral */
+.main-content {
+  margin-left: 250px; /* Desplazamos el contenido para que no quede tapado por la barra lateral */
+  padding: 20px;
+  transition: margin-left 0.3s;
+}
+
+/* Si quieres cambiar el color de la barra lateral al pasar de un modo oscuro a un modo claro, puedes agregar una clase adicional en el HTML */
+.sidebar.light-mode {
+  background-color: #f1f1f1;
+}
+
+.sidebar.light-mode a {
+  color: #333;
+}
+
+/* Enlace al contenido del menú */
+.sidebar h2 {
+  color: white;
+  padding-left: 16px;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+

@@ -1,0 +1,104 @@
+/* Estilos generales para el footer */
+footer {
+    background-color: #1a1a1a; /* Fondo oscuro */
+    color: #e0e0e0; /* Texto claro */
+    padding: 3rem 1.5rem; /* Espaciado */
+    font-family: 'Roboto', sans-serif; /* Tipografía moderna */
+  }
+  
+  /* Contenedor principal del footer */
+  footer .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  /* Estilos para los encabezados */
+  footer h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    margin-bottom: 1rem;
+  }
+  
+  /* Listas de enlaces */
+  footer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  footer ul li {
+    margin: 0.5rem 0;
+  }
+  
+  footer ul li a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  footer ul li a:hover {
+    color: #ffffff;
+  }
+  
+  /* Sección de ubicación y contacto */
+  footer .contact-info p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #b0b0b0;
+  }
+  
+  footer .contact-info p:hover {
+    color: #ffffff;
+  }
+  
+  /* Estilos para los iconos de redes sociales */
+  footer .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  footer .social-icons a {
+    color: #e0e0e0;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  
+  footer .social-icons a:hover {
+    color: #ffffff;
+  }
+  
+  /* Estilos para los iconos de métodos de pago */
+  footer .payment-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  footer .payment-icons svg {
+    color: #e0e0e0;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+  }
+  
+  footer .payment-icons svg:hover {
+    color: #ffffff;
+  }
+  
+  /* Línea divisoria y derechos de autor */
+  footer .footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+    color: #b0b0b0;
+    font-size: 0.8rem;
+  }
+  

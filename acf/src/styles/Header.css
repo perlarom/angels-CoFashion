@@ -1,124 +1,166 @@
-/* Estilos generales */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  
-  .logo img {
-    height: 50px;
-  }
-  
-  /* Menú principal: diseño en pantallas grandes */
-  .nav {
-    display: flex;
-    justify-content: flex-start; /* Alinea los elementos a la izquierda */
-    flex-grow: 1; /* Asegura que el menú ocupe todo el ancho disponible */
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1px 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 90px;
+  box-sizing: border-box;
+}
+
+.logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 100%; 
+}
+
+.logo-img {
+  width: 80px;
+  height: auto;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 10px 0; 
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.nav-menu li {
+  display: inline;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px; 
+  font-weight: bold;
+  transition: color 0.3s;
+  white-space: nowrap;
+  padding: 10px 15px; 
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1; /* Permite que el menú se ajuste al espacio disponible */
+  justify-content: center; 
+}
+
+.nav-menu li {
+  display: inline;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s;
+  white-space: nowrap; /* Evita que los textos se corten */
+}
+
+.nav-menu a:hover {
+  color: #ff6600;
+}
+
+/* Espaciado correcto del carrito de compras */
+.cart-icon {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.cart-icon a {
+  display: flex;
+  align-items: center;
+}
+
+/* Espaciado correcto del menú hamburguesa */
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
   .nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 25px;
+    gap: 10px; /* Reduce el espacio entre elementos */
   }
-  
-  .nav-menu li {
-    display: inline;
-  }
-  
-  .nav-menu a {
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333; /* Color del texto */
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .nav-menu a:hover {
-    color: #ff6600; /* Color al pasar el cursor */
-  }
-  
-  /* Estilo del ícono del carrito */
-  .cart-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: #333; /* Color del icono del carrito */
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .cart-icon:hover {
-    color: #ff6600;
-  }
-  
-  /* Menú en pantallas pequeñas: estilo de menú deslizable */
-  .menu-icon {
-    display: none;
-    cursor: pointer;
-    color: #333;
-  }
-  
-  .nav.open {
-    display: block;
-  }
-  
+}
+
+@media (max-width: 768px) {
   .nav-menu {
     display: none;
-  }
-  
-  .nav.open .nav-menu {
-    display: block;
+    flex-direction: column;
     position: absolute;
     top: 60px;
-    left: 0;
     right: 0;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    background-color: white;
+    width: 100%;
     text-align: center;
+    padding: 10px 0;
   }
-  
-  .nav-menu li {
-    margin-bottom: 10px;
+
+  .nav-menu.active {
+    display: flex;
   }
-  
-  .nav-menu a {
-    color: #333;
+
+  .menu-icon {
+    display: flex;
+    align-items: center;
   }
-  
-  .nav-menu a:hover {
-    color: #ff6600;
-  }
-  
-  /* Estilo responsive para pantallas pequeñas */
-  @media (max-width: 768px) {
-    .header {
-      flex-direction: column;
-      padding: 10px 15px;
-    }
-  
-    .nav {
-      width: 100%;
-      flex-direction: column; /* Asegura que el menú se apile en pantallas pequeñas */
-      align-items: center;
-    }
-  
-    .nav-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      text-align: center;
-      margin-top: 10px;
-    }
-  
-    .menu-icon {
-      display: block;
-    }
-  }
-  
+}
+
+.perfil-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.perfil-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.perfil-menu {
+  position: absolute;
+  top: 50px;
+  background: white;
+  padding: 10px;
+  color: black;
+  border-radius: 5px;
+  display: none;
+}
+
+.perfil-dropdown:hover .perfil-menu {
+  display: block;
+}
+
+.admin-tag {
+  color: red;
+  font-weight: bold;
+}
+
+.logout-button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  width: 100%;
+}

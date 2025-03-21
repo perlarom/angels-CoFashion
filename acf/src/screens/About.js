@@ -8,12 +8,11 @@ const About = () => {
 
   return (
     <>
-      <div className="title-logo-container">
-        <h1 className="text-4xl font-bold text-center">Sobre Nosotros</h1>
-        <div className="logo-container">
-          <img src={logo} alt="Angels & Co. Fashion" className="logo" />
-        </div>
-      </div>
+<div className="title-logo-container">
+  <h1 className="text-4xl font-bold text-center">Sobre Nosotros</h1>
+  <img src={logo} alt="Angels & Co. Fashion" className="logo" />
+</div>
+
 
       <div className="about-container">
         <section className="mission mb-12">

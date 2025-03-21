@@ -1,0 +1,168 @@
+.likes-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  min-height: 100vh; 
+  margin-top: 90px;
+}
+
+.likes-section {
+  width: 100%;
+  padding: 20px;
+  flex: 1; 
+  max-width: 1200px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente el contenido */
+  align-items: center;
+}
+
+.likes-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.likes-grid {
+  display: grid;
+  gap: 20px;
+  justify-items: center;
+}
+
+/* Para pantallas grandes, 4 productos por línea */
+@media (min-width: 1200px) {
+  .likes-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 productos por línea */
+  }
+}
+
+/* Para pantallas medianas, 3 productos por línea */
+@media (max-width: 1200px) and (min-width: 768px) {
+  .likes-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 productos por línea */
+  }
+}
+
+/* Para pantallas pequeñas, 1 producto por línea */
+@media (max-width: 768px) {
+  .likes-section {
+    max-width: 95%;
+    padding: 15px;
+  }
+  .likes-grid {
+    grid-template-columns: 1fr; /* 1 producto por línea */
+  }
+  .likes-title {
+    font-size: 22px;
+  }
+  .product-item-likes {
+    padding: 12px;
+  }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .likes-section {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  .likes-title {
+    font-size: 20px;
+  }
+
+  .product-item-likes {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .product-button-likes,
+  .like-button-likes,
+  .add-to-cart-button-likes {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+.product-item-likes {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-item-likes:hover {
+  transform: translateY(-10px);
+}
+
+.product-image-container-likes img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-title-likes {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.product-price-likes {
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0;
+}
+
+.product-button-likes, .like-button-likes, .add-to-cart-button-likes {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.product-button-likes:hover, .like-button-likes:hover, .add-to-cart-button-likes:hover {
+  background-color: #0056b3;
+}
+
+.product-actions-likes {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.footer-wrapper {
+  width: 100%;
+  padding-top: 20px; /* Ajusta el espacio superior si es necesario */
+}
+
+/* Estilo para el contenedor de imágenes en la página de Likes */
+.product-image-container-likes {
+  width: 100%;
+  height: 200px; /* Mantén la misma altura que usaste en el otro contenedor */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Las imágenes ocuparán todo el ancho del contenedor */
+.product-item-likes img {
+  width: 100%;
+  height: 100%; /* Mantiene las imágenes dentro de los límites del contenedor */
+  object-fit: cover; /* Asegura que la imagen cubra todo el espacio */
+  display: block;
+  border: none;
+  border-radius: 0;
+}

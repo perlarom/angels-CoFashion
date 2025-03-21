@@ -1,0 +1,148 @@
+/* ProductDetails.css */
+
+.container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .productDetails {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .imagesContainer {
+    margin-top: 20px;
+  }
+  
+  .image {
+    width: 100px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .categoriesContainer {
+    margin-top: 20px;
+  }
+  
+  .categoryItem {
+    font-size: 1rem;
+    color: #555;
+  }/* Estilos mejorados para ProductDetails */
+.container {
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 40px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #222;
+}
+
+.productDetails {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.productDetails p {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.imagesContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.imagesContainer h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.image {
+  width: 120px;
+  height: auto;
+  margin: 5px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+}
+
+.image:hover {
+  transform: scale(1.1);
+}
+
+.categoriesContainer {
+  margin-top: 20px;
+}
+
+.categoriesContainer h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.categoryItem {
+  font-size: 1.1rem;
+  color: #555;
+  background-color: #e3f2fd;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 5px;
+}
+
+.backButton {
+  display: block;
+  width: fit-content;
+  margin: 20px auto 0;
+  padding: 12px 25px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.backButton:hover {
+  background-color: #0056b3;
+}
+
+  
+  .backButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

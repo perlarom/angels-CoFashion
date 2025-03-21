@@ -1,0 +1,85 @@
+/* profile-container: Contenedor principal de la página de perfil */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f7fa;
+    padding: 20px;
+  }
+  
+  /* profile-info: Contenedor para los datos del perfil */
+  .profile-info {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Título de la página */
+  .profile-info h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Imagen de perfil */
+  .profile-image {
+    width: 120px;  /* Ajusta el tamaño según necesites */
+    height: 120px; 
+    border-radius: 50%; /* Hace la imagen completamente circular */
+    object-fit: cover; /* Asegura que la imagen se recorte bien dentro del círculo */
+    border: 2px solid #ccc; /* Agrega un borde opcional */
+  }
+  
+  
+  /* Estilo para los textos */
+  .profile-info p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  /* Clase para el tag de administrador */
+  .admin-tag {
+    font-size: 14px;
+    color: #ff8c00;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Enlace al Dashboard */
+  .profile-info a {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .profile-info a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Botón de cerrar sesión */
+  button {
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  button:hover {
+    background-color: #ff2d44;
+  }
+  
