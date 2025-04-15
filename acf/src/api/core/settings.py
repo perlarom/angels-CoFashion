@@ -59,7 +59,12 @@ MIDDLEWARE = [
 
 # CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Si usas React en este puerto
+    "http://localhost:3001",  # Ajusta si usas otro puerto
+]
+
+# CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'core.urls'
 

@@ -9,14 +9,14 @@ const VerProducto = () => {
   const [product, setProduct] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(""); // Asegúrate de que sea un string vacío al inicio
+  const [selectedImage, setSelectedImage] = useState(""); 
   const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);  // Estado para la cantidad
   const [showCartMessage, setShowCartMessage] = useState(false);
   const [isMessageVisible, setIsMessageVisible] = useState(false);
   const navigate = useNavigate();
 
-  // Simulación de estado de usuario logueado
-  const isLoggedIn = true;
+  const isLoggedIn = localStorage.getItem("authToken");
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/products/${id}/`)
@@ -25,51 +25,101 @@ const VerProducto = () => {
         setProduct(data);
         if (data.images && data.images.length > 0) {
           setSelectedImage(data.images[0].image_url);
-          console.log("Imagen principal cargada:", data.images[0].image_url); // Verifica que la imagen principal es correcta
+          console.log("Imagen principal cargada:", data.images[0].image_url);
         }
+
+        const savedLikes = JSON.parse(localStorage.getItem("likedProducts")) || [];
+        setIsLiked(savedLikes.includes(id)); // Verifica si el producto está en los "me gusta"
       })
       .catch((error) => console.error("Error al obtener el producto", error));
   }, [id]);
 
   const handleSizeSelect = (size) => {
-    setSelectedSize(size); // Actualiza la talla seleccionada
+    setSelectedSize(size); 
   };
 
-  const handleLike = () => {
-    if (isLoggedIn) {
-      setIsLiked(!isLiked);
-      fetch(`http://127.0.0.1:8000/product/${id}/like/`, {
-        method: isLiked ? "DELETE" : "POST",
+  const handleQuantityChange = (event) => {
+    setSelectedQuantity(event.target.value);  // Actualiza la cantidad seleccionada
+  };
+
+  const handleLike = async () => {
+    if (!isLoggedIn) {
+      alert("Debes estar logueado para dar me gusta.");
+      return;
+    }
+
+    const token = localStorage.getItem("authToken");
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/products/${id}/like/`, {
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
-    } else {
-      alert("Debes estar logueado para dar me gusta");
+
+      const result = await response.json();
+
+      if (response.ok) {
+        const likedProducts = JSON.parse(localStorage.getItem("likedProducts")) || [];
+        let updatedLikes;
+
+        if (isLiked) {
+          updatedLikes = likedProducts.filter((productId) => productId !== id); // Elimina el "like"
+        } else {
+          updatedLikes = [...likedProducts, id]; // Agrega el "like"
+        }
+
+        setIsLiked(!isLiked);  // Actualiza el estado de "like"
+        localStorage.setItem("likedProducts", JSON.stringify(updatedLikes));
+
+        if (!isLiked) {
+          setTimeout(() => {
+            if (window.confirm("¿Quieres ver tus Me Gusta?")) {
+              navigate("/likes");
+            }
+          }, 200);
+        }
+      } else {
+        console.error("Error:", result.error);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
     }
   };
 
   const handleAddToCart = () => {
-    if (isLoggedIn) {
-      setIsInCart(true);
-      fetch(`http://127.0.0.1:8000/cart/add/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId: id, sizeId: selectedSize?.size.id }),
-      })
-      .then(() => {
+    if (!isLoggedIn) {
+      alert("Debes estar logueado para agregar al carrito.");
+      return;
+    }
+
+    if (!selectedSize) {
+      alert("Por favor selecciona una talla antes de agregar al carrito.");
+      return;
+    }
+
+    fetch(`http://127.0.0.1:8000/cart/add/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+      body: JSON.stringify({
+        productId: id,
+        sizeId: selectedSize.size.id,
+        quantity: selectedQuantity,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Error al agregar al carrito");
+        setIsInCart(true);
         setShowCartMessage(true);
         setIsMessageVisible(true);
-        setTimeout(() => {
-          setIsMessageVisible(false);
-        }, 3000);
-      });
-    } else {
-      alert("Debes estar logueado para agregar al carrito");
-    }
-  };
+        setTimeout(() => setIsMessageVisible(false), 3000);
+      })
+      .catch((error) => console.error(error));
+  }; 
 
   return (
     <div>
@@ -77,13 +127,11 @@ const VerProducto = () => {
       <div>
         {product ? (
           <div className="productDetails">
-            {/* Nombre en grande */}
             <h1 className="productName">{product.name}</h1>
 
             <div className="productContainer">
               <div className="productImageContainer">
                 <div className="mainImage">
-                  {/* Asegúrate de que selectedImage contiene un valor válido */}
                   {selectedImage && (
                     <img
                       src={selectedImage}
@@ -96,6 +144,7 @@ const VerProducto = () => {
 
               <div className="productInfoContainer">
                 <p><strong>Descripción:</strong> {product.description}</p>
+
                 <div className="sizesContainer">
                   <h3>Tallas</h3>
                   {product.sizes && product.sizes.length > 0 ? (
@@ -120,7 +169,24 @@ const VerProducto = () => {
                   )}
                 </div>
 
-                {/* SKU */}
+                {/* Selección de cantidad */}
+                {selectedSize && (
+                  <div className="quantityContainer">
+                    <h3>Cantidad</h3>
+                    <select
+                      value={selectedQuantity}
+                      onChange={handleQuantityChange}
+                    >
+                      {[...Array(5)].map((_, index) => (
+                        <option key={index} value={index + 1}>
+                          {index + 1}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="unitText">{selectedQuantity === 1 ? "Unidad" : "Unidades"}</span>
+                  </div>
+                )}
+
                 <div className="skuContainer">
                   <h3>SKU:</h3>
                   <textarea
@@ -131,7 +197,6 @@ const VerProducto = () => {
                   />
                 </div>
 
-                {/* Acciones */}
                 <div className="actionsContainer">
                   <button onClick={handleLike} className="likeButton">
                     {isLiked ? "Quitar Me Gusta" : "Dar Me Gusta"}
@@ -141,11 +206,12 @@ const VerProducto = () => {
                   </button>
                 </div>
 
-                {/* Mensaje de éxito */}
                 {isMessageVisible && showCartMessage && (
                   <div className="cartMessage">
                     <p>¡Producto agregado al carrito!</p>
-                    <button onClick={() => navigate("/cart")} className="viewCartButton">
+                    <button 
+                      onClick={() => navigate("/cart")} 
+                      className="viewCartButton">
                       Ver Carrito
                     </button>
                   </div>
@@ -153,7 +219,6 @@ const VerProducto = () => {
               </div>
             </div>
 
-            {/* Miniaturas de las imágenes */}
             <div className="thumbnailImages">
               {product.images && product.images.length > 0 ? (
                 product.images.map((image, index) => (
@@ -162,7 +227,7 @@ const VerProducto = () => {
                     src={image.image_url}
                     alt={`Imagen del producto ${index + 1}`}
                     className={`thumbnail ${selectedImage === image.image_url ? "selected" : ""}`}
-                    onClick={() => setSelectedImage(image.image_url)} // Cambia la imagen principal al hacer clic
+                    onClick={() => setSelectedImage(image.image_url)}
                   />
                 ))
               ) : (

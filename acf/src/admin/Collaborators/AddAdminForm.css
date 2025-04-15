@@ -1,0 +1,79 @@
+.main-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;  /* Ajusta el tamaño del Sidebar */
+  position: fixed;  /* Fija el Sidebar */
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.content {
+  margin-left: 250px;  /* Ajusta el margen izquierdo para dejar espacio al Sidebar */
+  padding: 20px;
+  flex-grow: 1;  /* Asegura que el contenido ocupe el resto del espacio */
+  background-color: #fff;
+  overflow-x: auto;
+}
+
+.add-admin-form button {
+  padding: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.add-admin-form button:hover {
+  background-color: #45a049;
+}
+
+.add-admin-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.add-admin-form button.cancel-button {
+  background-color: #e74c3c;
+  margin-top: 10px;
+}
+
+.add-admin-form button.cancel-button:hover {
+  background-color: #c0392b;
+}
+
+.add-admin-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  appearance: none;  /* Elimina el estilo predeterminado del navegador */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;  /* Cambia el cursor para indicar que es interactivo */
+}
+
+.add-admin-form select:focus {
+  border-color: #4CAF50;
+  background-color: #fff;
+  outline: none;
+}
+
+.add-admin-form select option {
+  padding: 10px;
+  background-color: #fafafa;
+}
+
+.add-admin-form select::-ms-expand {
+  display: none;  
+}

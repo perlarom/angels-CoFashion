@@ -1,18 +1,18 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Mensaje, UserProfile, Category, Subcategory, Product, Size, ProductSize, ProductImage, Like
+from .models import Mensaje, UserProfile, Category, Subcategory, Product, Size, ProductSize, ProductImage, Like, Quantity, Cart
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from django.core.mail import send_mail
 from django.core.exceptions import ValidationError  
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import status, viewsets, generics, permissions
+from rest_framework import status, viewsets, generics
 from rest_framework.generics import ListAPIView
-from apps.api.serializers import UserSerializer, CategorySerializer, SubcategorySerializer, ProductSerializer, SizeSerializer, ProductSizeSerializer, ProductImageSerializer, LikeSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from apps.api.serializers import UserSerializer, CategorySerializer, SubcategorySerializer, ProductSerializer, SizeSerializer, ProductSizeSerializer, ProductImageSerializer, LikeSerializer, CartSerializer, QuantitySerializer
 from rest_framework.permissions import IsAuthenticated
 
 import json
@@ -77,6 +77,7 @@ def login_user(request):
                 'username': user.username,
                 'email': user.email,
                 'is_admin': user.is_superuser,
+                'is_staff': user.is_staff
             }
         })
     else:
@@ -90,7 +91,6 @@ def check_username(request):
         return JsonResponse({'available': False})
     return JsonResponse({'available': True})
 
-# Vista para registrar un usuario
 @api_view(['POST'])
 def register_user(request):
     if request.method == 'POST':
@@ -101,6 +101,7 @@ def register_user(request):
         address = request.data.get('address')
         password = request.data.get('password')
         confirm_password = request.data.get('confirm_password')
+        role = request.data.get('role', 'staff')  # Asigna el rol por defecto a 'staff'
 
         if User.objects.filter(username=username).exists():
             return JsonResponse({'error': 'El nombre de usuario ya está en uso'}, status=status.HTTP_400_BAD_REQUEST)
@@ -110,11 +111,18 @@ def register_user(request):
 
         if len(password) < 6:
             return JsonResponse({'error': 'La contraseña debe tener al menos 6 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
+
+            # Asignar rol al usuario
+            if role == 'admin':
+                user.is_superuser = True
+                user.is_staff = True
+            else:
+                user.is_staff = True
             user.save()
 
             # Crear un perfil para el usuario
@@ -124,16 +132,29 @@ def register_user(request):
                 last_name=last_name,
                 username=username,
                 email=email,
-                password=password, 
+                password=password,
                 address=address,
                 last_login=user.last_login
             )
+
+            # Asignar grupo y permisos si el rol es 'admin'
+            if role == 'admin':
+                # Asignar el grupo 'Administradores'
+                administradores_group = Group.objects.get(name='Administradores')
+                user_profile.groups.add(administradores_group)
+
+                # Asignar el permiso 'can_delete_posts' (esto es solo un ejemplo)
+                delete_permission = Permission.objects.get(codename='can_delete_posts')
+                user_profile.user_permissions.add(delete_permission)
+
+            # Guardar el perfil con los grupos y permisos
+            user_profile.save()
 
         except ValidationError as e:
             return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         return JsonResponse({'success': 'Usuario registrado correctamente'}, status=status.HTTP_201_CREATED)
-
+ 
 @api_view(['GET'])
 def obtener_superusuarios(request):
     superusuarios = User.objects.filter(is_staff=True)
@@ -160,6 +181,11 @@ class SubcategoryViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all().order_by('-created_at')
     serializer_class = ProductSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        product = self.get_object()
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 # 📌 ViewSet de Tallas
 class SizeViewSet(viewsets.ModelViewSet):
@@ -250,15 +276,7 @@ def create_product(request):
     except Exception as e:
         return JsonResponse({"message": "Failed to create product", "error": str(e)}, status=500)
 
-@api_view(['DELETE'])  # Asegúrate de que el método DELETE está permitido
-def delete_product(request, product_id):
-    try:
-        product = Product.objects.get(id=product_id)
-        product.delete()
-        return Response({"message": "Product deleted successfully!"}, status=200)
-    except Product.DoesNotExist:
-        return Response({"message": "Product not found"}, status=404)
-
+    
 @api_view(['GET'])
 def product_list(request):
     try:
@@ -296,7 +314,7 @@ def products_by_subcategory(request, subcategory_name):
 
 
 class LikeToggleView(APIView):
-    permission_classes = [IsAuthenticated]  # Solo usuarios autenticados pueden dar like
+    permission_classes = [IsAuthenticated] 
 
     def post(self, request, product_id):
         user = request.user
@@ -305,14 +323,14 @@ class LikeToggleView(APIView):
         except Product.DoesNotExist:
             return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Verificar si ya dio like
-        like, created = Like.objects.get_or_create(user=user, product=product)
+        like = Like.objects.filter(user=user, product=product).first()
 
-        if not created:
-            like.delete()  # Si ya existe, elimina el "Me Gusta"
+        if like:
+            like.delete()  
             return Response({"message": "Me gusta eliminado"}, status=status.HTTP_200_OK)
-
-        return Response({"message": "Me gusta agregado"}, status=status.HTTP_201_CREATED)
+        else:
+            Like.objects.create(user=user, product=product)
+            return Response({"message": "Me gusta agregado"}, status=status.HTTP_201_CREATED)
         
 class UserLikesView(ListAPIView):
     serializer_class = ProductSerializer
@@ -320,6 +338,86 @@ class UserLikesView(ListAPIView):
 
     def get_queryset(self):
         return Product.objects.filter(likes__user=self.request.user)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def toggle_like(request, id):
+    try:
+        product = Product.objects.get(id=id)
+        # Lógica para manejar "me gusta"
+        like, created = Like.objects.get_or_create(product=product, user=request.user)
+        if not created:
+            like.delete()  # Eliminar el like si ya existe
+            return JsonResponse({"liked": False})
+        return JsonResponse({"liked": True})
+    except Product.DoesNotExist:
+        return JsonResponse({"error": "Producto no encontrado"}, status=404)
+
+class QuantityListCreateView(generics.ListCreateAPIView):
+    queryset = Quantity.objects.all()
+    serializer_class = QuantitySerializer
+
+#CART
+@api_view(['POST'])
+def add_to_cart(request):
+    if not request.user.is_authenticated:
+        return Response({"error": "Debes estar logueado para agregar al carrito"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    product_id = request.data.get('productId')
+    size_id = request.data.get('sizeId')
+    quantity = request.data.get('quantity')
+
+    try:
+        product = Product.objects.get(id=product_id)
+        quantity_instance = Quantity.objects.get(id=size_id)
+    except Product.DoesNotExist or Quantity.DoesNotExist:
+        return Response({"error": "Producto o tamaño no encontrados"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    cart_item = Cart.objects.create(
+        user=request.user,
+        product=product,
+        quantity=quantity_instance
+    )
+    
+    return Response(CartSerializer(cart_item).data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def get_cart_items(request):
+    if not request.user.is_authenticated:
+        return Response({"error": "Debes estar logueado para ver el carrito"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    cart_items = Cart.objects.filter(user=request.user)
+    
+    serialized_items = CartSerializer(cart_items, many=True)
+    
+    return Response(serialized_items.data, status=status.HTTP_200_OK)
+
+@api_view(['DELETE'])
+def remove_from_cart(request, cart_item_id):
+    try:
+        cart_item = Cart.objects.get(id=cart_item_id, user=request.user)
+        cart_item.delete()
+        return Response({"message": "Producto eliminado del carrito."}, status=status.HTTP_200_OK)
+    except Cart.DoesNotExist:
+        return Response({"error": "Producto no encontrado en el carrito."}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['PUT'])
+def update_cart_item_quantity(request, cart_item_id):
+    try:
+        cart_item = Cart.objects.get(id=cart_item_id, user=request.user)
+    except Cart.DoesNotExist:
+        return Response({"error": "Producto no encontrado en el carrito."}, status=status.HTTP_404_NOT_FOUND)
+
+    quantity_value = request.data.get("quantity")
+    try:
+        quantity = Quantity.objects.get(value=quantity_value)
+    except Quantity.DoesNotExist:
+        return Response({"error": "Cantidad no válida."}, status=status.HTTP_400_BAD_REQUEST)
+
+    cart_item.quantity = quantity
+    cart_item.save()
+
+    return Response(CartSerializer(cart_item).data, status=status.HTTP_200_OK)
 
 ####EXTRAER LOS ULTIMOS PRODUCTOS######
 def ultimos_productos(request):
@@ -334,14 +432,3 @@ def ultimos_productos(request):
         for product in products
     ]
     return JsonResponse(data, safe=False)
-
-# @api_view(['GET'])
-# def obtener_tallas(request):
-#     sizes = Size.objects.all()
-#     serializer = SizeSerializer(sizes, many=True)
-#     return Response(serializer.data)
-
-# def get_quantities(request):
-#     quantities = list(Quantity.objects.values("id", "amount"))
-#     return JsonResponse({"quantities": quantities})
-

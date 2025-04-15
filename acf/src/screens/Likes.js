@@ -32,9 +32,9 @@ const Likes = () => {
     fetchLikedProducts();
   }, []);
 
-  const handleAddToCart = (productId) => {
-    console.log(`Producto con id: ${productId} agregado al carrito`);
-  };
+  // const handleAddToCart = (productId) => {
+  //   console.log(`Producto con id: ${productId} agregado al carrito`);
+  // };
 
   const handleLikeToggle = async (productId) => {
     const token = localStorage.getItem("authToken");
@@ -105,9 +105,9 @@ const Likes = () => {
                       style={{ color: product.liked ? "red" : "black" }}
                     ></i>
                   </button>
-                  <button className="add-to-cart-button-likes" onClick={() => handleAddToCart(product.id)}>
+                  {/* <button className="add-to-cart-button-likes" onClick={() => handleAddToCart(product.id)}>
                     Agregar al carrito
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))

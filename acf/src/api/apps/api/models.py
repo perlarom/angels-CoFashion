@@ -95,21 +95,33 @@ class Like(models.Model):
     def __str__(self):
         return f"{self.user.username} le dio like a {self.product.name}"
 
+class Quantity(models.Model):
+    value = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 6)])
+
+    def __str__(self):
+        return str(self.value)
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="carts")
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name="cart_items")
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.ForeignKey('Quantity', on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'product') 
+        unique_together = ('user', 'product', 'quantity')
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.name} (x{self.quantity})"
+        return f"Carrito de {self.user.username} - {self.product.name} (Cantidad: {self.quantity.value})"
 
     def get_total_price(self):
-        return self.product.price * self.quantity
+        return self.product.price * self.quantity.value
+
+    def get_size_description(self):
+        try:
+            product_size = ProductSize.objects.filter(product=self.product).first()
+            return product_size.size.description if product_size else None
+        except:
+            return None
 
 #####CHATBOT#######
 class ChatbotConversation(models.Model):

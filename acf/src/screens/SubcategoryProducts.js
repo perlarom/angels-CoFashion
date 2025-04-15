@@ -8,16 +8,15 @@ import "font-awesome/css/font-awesome.min.css";
 const SubcategoryProducts = () => {
   const { subcategoryName } = useParams();
   const [products, setProducts] = useState([]);
-  const [likedProducts, setLikedProducts] = useState([]); // Almacenar productos con "me gusta"
+  const [likedProducts, setLikedProducts] = useState([]);
   const navigate = useNavigate();
 
-  // Cargar productos con "me gusta" desde localStorage
   useEffect(() => {
-    // Recuperamos los productos con "me gusta" de localStorage
+    // Obtener los productos "liked" desde el localStorage
     const savedLikes = JSON.parse(localStorage.getItem("likedProducts")) || [];
     setLikedProducts(savedLikes);
 
-    // Fetch de productos por subcategoría
+    // Obtener los productos de la subcategoría desde la API
     const fetchProductsBySubcategory = async () => {
       try {
         const res = await fetch(`http://localhost:8000/api/products/subcategory/${subcategoryName}`);
@@ -31,46 +30,46 @@ const SubcategoryProducts = () => {
     fetchProductsBySubcategory();
   }, [subcategoryName]);
 
-  // Manejar el "me gusta"
-  const handleLike = async (productId) => {
-    const token = localStorage.getItem("authToken");
+  const handleViewProduct = (productId) => {
+    navigate(`/ver-producto/${productId}`);
+  };
 
+  const handleLike = async (productId) => {
+    // Verificar si el usuario está autenticado (si es necesario)
+    const token = localStorage.getItem("authToken");
     if (!token) {
       alert("Debes iniciar sesión para dar me gusta.");
       return;
     }
 
+    // Actualizar los "likes" en el estado
+    let updatedLikes;
+    if (likedProducts.some((product) => product.id === productId)) {
+      updatedLikes = likedProducts.filter((product) => product.id !== productId);
+    } else {
+      const product = products.find((product) => product.id === productId);
+      updatedLikes = [...likedProducts, product];
+    }
+
+    // Guardar los productos "liked" en el localStorage
+    setLikedProducts(updatedLikes);
+    localStorage.setItem("likedProducts", JSON.stringify(updatedLikes));
+
+    // Realizar la solicitud para marcar el producto como "liked"
     try {
-      let updatedLikes;
-
-      if (likedProducts.includes(productId)) {
-        // Si ya estaba marcado, lo desmarcamos (quitamos el "me gusta")
-        updatedLikes = likedProducts.filter((id) => id !== productId);
-
-        // Mostrar mensaje de que se quitó el "me gusta"
-        alert("Se quitó de los me gusta");
-      } else {
-        // Si no estaba marcado, lo agregamos
-        updatedLikes = [...likedProducts, productId];
-      }
-
-      // Actualizamos el estado de likedProducts
-      setLikedProducts(updatedLikes);
-
-      // Guardamos los productos con "me gusta" en localStorage
-      localStorage.setItem("likedProducts", JSON.stringify(updatedLikes));
-
-      // Si la respuesta fue exitosa, mostramos mensaje de éxito
-      if (!likedProducts.includes(productId)) {
-        alert("Me gusta agregado con éxito");
+      const response = await fetch(`http://localhost:8000/api/products/${productId}/like/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        console.error("Error al agregar el like:", result.error);
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
     }
-  };
-
-  const handleViewProduct = (productId) => {
-    navigate(`/ver-producto/${productId}`);
   };
 
   const handleAddToCart = (productId) => {
@@ -106,8 +105,8 @@ const SubcategoryProducts = () => {
                     onClick={() => handleLike(product.id)}
                   >
                     <i
-                      className={`fa ${likedProducts.includes(product.id) ? "fa-heart" : "fa-heart-o"}`}
-                      style={{ color: likedProducts.includes(product.id) ? "red" : "black" }}
+                      className={`fa ${likedProducts.some((likedProduct) => likedProduct.id === product.id) ? "fa-heart" : "fa-heart-o"}`}
+                      style={{ color: likedProducts.some((likedProduct) => likedProduct.id === product.id) ? "red" : "black" }}
                     ></i>
                   </button>
                   <button className="add-to-cart-button" onClick={() => handleAddToCart(product.id)}>

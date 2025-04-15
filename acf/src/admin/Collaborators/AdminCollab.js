@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import "./AdminCollab.css";
 import Sidebar from "../../components/Sidebar.js";
+import { useNavigate } from 'react-router-dom';  // Importar useNavigate para redirigir
 
 const AdminCollab = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();  // Hook de useNavigate para la redirección
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,6 +20,10 @@ const AdminCollab = () => {
 
     fetchUsers();
   }, []);
+
+  const handleAddAdmin = () => {
+    navigate('/admin/agregar-admin');  // Redirigir al formulario de agregar admin
+  };
 
   return (
     <div className="main-container">
@@ -44,6 +50,12 @@ const AdminCollab = () => {
             ))}
           </tbody>
         </table>
+
+        <div className="button-container">
+          <button className="add-admin-btn" onClick={handleAddAdmin}>
+            Agregar Administrador
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -2,9 +2,10 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings 
 from django.conf.urls.static import static
-from apps.api.views import enviar_mensaje, get_messages, delete_message, create_product, product_list, ultimos_productos, products_by_subcategory, delete_product
-from apps.api.views import login_user, check_username, register_user, obtener_usuarios, obtener_superusuarios
-from apps.api.views import CategoryViewSet, SubcategoryViewSet, ProductViewSet, SizeViewSet, ProductSizeViewSet, ProductImageViewSet, LikeToggleView, UserLikesView
+from apps.api.views import enviar_mensaje, get_messages, delete_message, create_product, product_list, ultimos_productos, products_by_subcategory
+from apps.api.views import add_to_cart, get_cart_items, remove_from_cart, update_cart_item_quantity
+from apps.api.views import login_user, check_username, register_user, obtener_usuarios, obtener_superusuarios, toggle_like
+from apps.api.views import CategoryViewSet, SubcategoryViewSet, ProductViewSet, SizeViewSet, ProductSizeViewSet, ProductImageViewSet, LikeToggleView, UserLikesView, QuantityListCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,18 +33,17 @@ urlpatterns = [
     path('api/subcategories/<int:pk>/delete/', SubcategoryViewSet.as_view({'delete': 'destroy'}), name='subcategory-delete'),
     # Productos
     path('api/products/', product_list, name='product-list'),
-    path('api/products/<int:pk>/', ProductViewSet.as_view({'get': 'retrieve'}), name='product-detail'),
+    path('api/products/<int:pk>/', ProductViewSet.as_view({'get': 'retrieve', 'delete': 'destroy'}), name='product-detail'),
     path('api/products/create/', create_product, name='create_product'),
-    # path('api/products/create/', ProductViewSet.as_view({'post': 'create'}), name='product-create'),
     path('api/products/<int:pk>/update/', ProductViewSet.as_view({'put': 'update'}), name='product-update'),
-    path('api/products/<int:product_id>/', delete_product, name='delete_product'),
+
     # Tallas
     path('api/sizes/', SizeViewSet.as_view({'get': 'list'}), name='size-list'),
     path('api/sizes/<int:pk>/', SizeViewSet.as_view({'get': 'retrieve'}), name='size-detail'),
     path('api/sizes/create/', SizeViewSet.as_view({'post': 'create'}), name='size-create'),
     path('api/sizes/<int:pk>/update/', SizeViewSet.as_view({'put': 'update'}), name='size-update'),
     path('api/sizes/<int:pk>/delete/', SizeViewSet.as_view({'delete': 'destroy'}), name='size-delete'),
-    # 🚀 Listado de Stock por Talla
+    #  Listado de Stock por Talla
     path('api/product-sizes/', ProductSizeViewSet.as_view({'get': 'list'}), name='product-size-list'),
     path('api/product-sizes/<int:pk>/', ProductSizeViewSet.as_view({'get': 'retrieve'}), name='product-size-detail'),
     path('api/product-sizes/create/', ProductSizeViewSet.as_view({'post': 'create'}), name='product-size-create'),
@@ -51,16 +51,24 @@ urlpatterns = [
     path('api/product-sizes/<int:pk>/delete/', ProductSizeViewSet.as_view({'delete': 'destroy'}), name='product-size-delete'),
     path('api/ultimos-productos/', ultimos_productos, name='ultimos_productos'),
 
-    # 🚀 Listado de Imágenes de Producto
+    #  Listado de Imágenes de Producto
     path('api/product-images/', ProductImageViewSet.as_view({'get': 'list'}), name='product-image-list'),
     path('api/product-images/<int:pk>/', ProductImageViewSet.as_view({'get': 'retrieve'}), name='product-image-detail'),
     path('api/product-images/create/', ProductImageViewSet.as_view({'post': 'create'}), name='product-image-create'),
     path('api/product-images/<int:pk>/update/', ProductImageViewSet.as_view({'put': 'update'}), name='product-image-update'),
     path('api/product-images/<int:pk>/delete/', ProductImageViewSet.as_view({'delete': 'destroy'}), name='product-image-delete'),
     path('api/products/subcategory/<str:subcategory_name>/', products_by_subcategory, name='products_by_subcategory'),
-
+    # Me gusta
     path("api/products/<int:product_id>/like/", LikeToggleView.as_view(), name="like-toggle"),
     path('api/products/likes/', UserLikesView.as_view(), name='user-likes'),
+    path('product/<int:id>/is_liked/', toggle_like, name='toggle_like'),
+    #Carrito
+    path('quantities/', QuantityListCreateView.as_view(), name='quantity-list-create'),
+    path('cart/add/', add_to_cart, name='add_to_cart'),
+    path('cart/', get_cart_items, name='get_cart_items'), 
+    path('cart/remove/<int:cart_item_id>/', remove_from_cart, name='remove_from_cart'),
+    path('cart/update/<int:cart_item_id>/', update_cart_item_quantity, name='update_cart_quantity'),
+
 ]
 
 if settings.DEBUG:

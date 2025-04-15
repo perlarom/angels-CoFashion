@@ -33,3 +33,23 @@
     background-color: #f4f4f4;
   }
   
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+.add-admin-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .add-admin-btn:hover {
+    background-color: #45a049;
+  }
+  

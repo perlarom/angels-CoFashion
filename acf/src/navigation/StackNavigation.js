@@ -14,6 +14,7 @@ import ProductDetail from "../admin/Products/ProductDetail.js"
 import EditarProducto from "../admin/Products/EditProduct.js"
 import Users from "../admin/Users/Users.js"
 import AdminCollab from "../admin/Collaborators/AdminCollab.js"
+import AddAdminForm from "../admin/Collaborators/AddAdminForm.js"
 import Messages from "../admin/Messages/Messages.js"
 import VerProducto from "../screens/ViewProduct.js"
 import Cart from "../screens/Cart.js"
@@ -40,6 +41,7 @@ const StackNavigation = () => {
         <Route path="/admin/productos/:id" element={<ProductDetail />} />
         <Route path="/admin/productos/edit/:id" element={<EditarProducto />} />
         <Route path="/admin/admin-colab" element={<AdminCollab />} />
+        <Route path="admin/agregar-admin" element={<AddAdminForm />} />
         <Route path="/admin/mensajes" element={<Messages />} />
         <Route path="/ver-producto/:id" element={<VerProducto />} />
         <Route path="/productos/:subcategoryName" element={<SubcategoryProducts />} /> 

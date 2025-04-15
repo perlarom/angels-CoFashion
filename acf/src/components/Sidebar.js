@@ -1,8 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/Sidebar.css";
 
 const Sidebar = () => {
+  // Usamos useLocation para obtener la ruta actual y ver cuál está activa
+  const location = useLocation();
+
+  // Función para manejar el cierre de sesión
   const handleLogout = () => {
     localStorage.removeItem("token");
   };
@@ -13,14 +17,36 @@ const Sidebar = () => {
         <h2>Panel de Administración</h2>
       </Link>
 
-      <Link to="/admin/productos" className="active">
+      <Link
+        to="/admin/productos"
+        className={location.pathname === "/admin/productos" ? "active" : ""}
+      >
         Productos
       </Link>
-      <Link to="/admin/usuarios">Usuarios Registrados</Link>
-      {/* <Link to="/admin/pedidos">Pedidos</Link> */}
-      <Link to="/admin/admin-colab">Administradores y Colaboradores</Link>
-      <Link to="/admin/mensajes">Mensajes</Link>
-      <Link to="/inicio">Ver Página</Link>
+      <Link
+        to="/admin/usuarios"
+        className={location.pathname === "/admin/usuarios" ? "active" : ""}
+      >
+        Usuarios Registrados
+      </Link>
+      <Link
+        to="/admin/admin-colab"
+        className={location.pathname === "/admin/admin-colab" ? "active" : ""}
+      >
+        Administradores y Colaboradores
+      </Link>
+      <Link
+        to="/admin/mensajes"
+        className={location.pathname === "/admin/mensajes" ? "active" : ""}
+      >
+        Mensajes
+      </Link>
+      <Link
+        to="/inicio"
+        className={location.pathname === "/inicio" ? "active" : ""}
+      >
+        Ver Página
+      </Link>
       <Link to="/login" onClick={handleLogout} className="logout-link">
         Cerrar Sesión
       </Link>

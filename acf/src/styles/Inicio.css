@@ -107,92 +107,161 @@
     color: #7F6C4C;
 }
   
-  /* Productos */
-  .products-section {
-    padding: 50px 20px;
-    text-align: center;
-    background: #F2EFEA;
-    width: 100%;
-    max-width: 1200px; 
-    margin: 40px auto;
-    align-items: center;
-  }
+/* Sección de Productos */
+.products-section {
+  padding: 50px 20px;
+  text-align: center;
+  background: #F2EFEA;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 40px;  /* Añadir separación a la izquierda */
+  padding-right: 40px; 
+}
 
+/* Estilo para el título de los productos */
+.products-title {
+  font-size: 32px;
+  color: #6F5425;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Grid de productos */
+.products-section .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 1024px) {
   .products-section .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas en todo momento */
-    gap: 20px;
-    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  /* Media queries para asegurar que se adapten bien a pantallas más pequeñas */
-  @media (max-width: 1024px) {
-    .products-section .grid {
-      grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .products-section .grid {
-      grid-template-columns: 1fr; /* 1 columna en pantallas pequeñas */
-    }
-  }
-  
-  
-  .products-title {
-    font-size: 32px;
-    color: #6F5425;
-  }
-  
-  .product-item {
-    text-align: center;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    margin: 0 auto; /* Centra los elementos */
-    width: 100%;
-    max-width: 250px; /* Controla el tamaño máximo */
-  }
-  
-  .product-item:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .product-item img {
-    width: 50%;
-    max-width: 150px;
-    height: 50%;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
-  
-  .product-title {
-    font-size: 20px;
-    color: #6F5425;
 }
-  
-  .product-price {
-    font-size: 18px;
-    color: #9C843C;
-}
-  
-  .product-button {
-    margin-top: 10px;
-    padding: 8px 16px;
-    font-size: 14px;
-    background-color: #9C843C;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+
+@media (max-width: 768px) {
+  .products-section .grid {
+    grid-template-columns: 1fr;
   }
-  
-  .product-button:hover {
-    background-color: #7F6C4C;
-}  
+}
+
+/* Item del producto */
+.product-item {
+  text-align: center;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+  width: 100%;
+  max-width: 220px;
+  overflow: hidden;
+  position: relative;
+  background-color: #f9f9f9;
+}
+
+/* Efecto hover para el item */
+.product-item:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  background-color: #fffae6;  /* Resalta el item */
+}
+
+/* Imagen del producto */
+.product-item img {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+/* Efecto hover sobre la imagen */
+.product-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Título del producto */
+.product-title {
+  font-size: 20px;
+  color: #6F5425;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Precio del producto */
+.product-price {
+  font-size: 18px;
+  color: #9C843C;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* Botón de ver más */
+.product-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #9C843C;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hover sobre el botón */
+.product-button:hover {
+  background-color: #7F6C4C;
+}
+
+/* Botones de interacción (me gusta) */
+.product-actions {
+  margin-top: 15px;
+}
+
+.like-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.like-button:hover {
+  transform: scale(1.1);
+}
+
+.like-button i {
+  font-size: 24px;
+}
+
+.like-button i.fa-heart {
+  color: red;
+}
+
+.like-button i.fa-heart-o {
+  color: black;
+}
+
+/* Mensaje para usuarios no autenticados */
+.product-item p {
+  font-size: 14px;
+  color: #7F7F7F;
+}
+
   
   /* Beneficios */
   .benefits-section {

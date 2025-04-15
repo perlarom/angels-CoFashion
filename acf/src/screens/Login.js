@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/Login.css";
-import Header from "../components/Header.js";
 import logo from "../assets/imgs/Angels1.png";
+import "font-awesome/css/font-awesome.min.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -28,12 +33,15 @@ const Login = () => {
       const result = await response.json();
 
       if (response.ok) {
-        // Guardar el access_token en localStorage
         localStorage.setItem("authToken", result.access_token);
         localStorage.setItem("user", JSON.stringify(result.user));
 
         alert("Inicio de sesión exitoso");
-        navigate("/inicio");
+        if (result.user.is_admin || result.user.is_staff) {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/inicio");
+        }
       } else {
         setError(result.error || "Error al iniciar sesión");
       }
@@ -43,8 +51,7 @@ const Login = () => {
   };
 
   return (
-    <>
-      <Header />
+    <div className="login-body"> 
       <div className="login-container">
         <div className="login-form">
           <div className="logo-container">
@@ -52,7 +59,21 @@ const Login = () => {
           </div>
           <h2>Iniciar sesión</h2>
           {error && <p className="error-message">{error}</p>}
-          <form onSubmit={handleSubmit}>
+          <form 
+            onSubmit={handleSubmit}
+            style={{
+              width: "100%",
+              maxWidth: "400px",
+              margin: "0 auto",
+              padding: "20px",
+              backgroundColor: "#fff",
+              borderRadius: "10px",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+            }}
+          >
             <div className="form-group">
               <label htmlFor="username">Nombre de usuario</label>
               <input
@@ -65,17 +86,20 @@ const Login = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group password-group">
               <label htmlFor="password">Contraseña</label>
-              <div className="input-container">
+              <div className="password-wrapper">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
                   required
                 />
+                <span className="password-toggle" onClick={togglePasswordVisibility}>
+                  <i className={showPassword ? "fa fa-eye" : "fa fa-eye-slash"}></i>
+                </span>
               </div>
             </div>
 
@@ -87,7 +111,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

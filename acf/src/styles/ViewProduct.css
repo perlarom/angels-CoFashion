@@ -334,3 +334,66 @@ header {
     }
   }
   
+  .quantityContainer {
+    margin-bottom: 20px; /* Espacio debajo del contenedor */
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos estén uno debajo del otro */
+  }
+  
+  .quantityContainer h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px; /* Espacio debajo del título */
+  }
+  
+  .quantityContainer select {
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    width: 100%;
+    margin-top: 5px; /* Añadir margen superior para separar el select del título */
+  }
+  
+  .quantityContainer select:hover {
+    border-color: #007bff;
+  }
+  
+  .quantityContainer select:focus {
+    border-color: #0056b3;
+    background-color: #e9ecef;
+  }
+  
+  .quantityContainer select {
+    appearance: none; /* Elimina la apariencia por defecto del navegador */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  .quantityContainer select::after {
+    content: '▼'; /* Flecha para el dropdown */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #007bff;
+    pointer-events: none;
+  }
+  
+  .selectWithUnit {
+    display: flex;
+    align-items: center;
+  }
+  
+  .selectWithUnit select {
+    margin-right: 10px; /* Espacio entre la cantidad y la palabra */
+  }
+  
+  .unitText {
+    font-size: 14px;
+    color: #555; /* Puedes cambiar el color si lo necesitas */
+  }
+  
